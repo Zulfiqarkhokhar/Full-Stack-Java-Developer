@@ -1,6 +1,7 @@
 package com.example.SpringDataJPA.entity;
 
 import com.example.SpringDataJPA.type.BloodGroupType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,10 +17,12 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -55,11 +58,12 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
 
-    @OneToOne // owning side
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true) // owning side
     private Insurance insurance;
 
-    @OneToMany(mappedBy = "patient")//inverse side
-    private List<Appointment> appointments;
+    @OneToMany(mappedBy = "patient",cascade = CascadeType.REMOVE,orphanRemoval = true)//inverse side
+    @ToString.Exclude
+    private List<Appointment> appointments = new ArrayList<>();
 
 
 }

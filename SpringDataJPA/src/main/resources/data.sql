@@ -4,3 +4,6 @@ VALUES ('Zulfiqar Ali','Male','zulfiqar@gmail.com','1999-01-01','A_POSITIVE'),
 ('Abid','Male','abid@gmail.com','1997-01-01','O_POSITIVE'),
 ('Talabdar','Female','talabdar@gmail.com','1996-01-01','AB_POSITIVE'),
 ('Shafique','Male','shafique@gmail.com','1995-01-01','O_POSITIVE');
+
+INSERT INTO doctor (name,specialization,email)
+VALUES ('Ghulam Nabi','Physicians','doc@gmail.com'),('Mohammad','Cardiologist','doc1@gmail.com'),('Sajid','Neurologist','doc2@gmail.com');
