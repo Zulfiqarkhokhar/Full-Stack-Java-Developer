@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getUsers } from "../utils/getUsers";
+import { getUsers } from "../../utils/getUsers";
 import Users from "./Users";
 
 const UserSortingDemo = () => {

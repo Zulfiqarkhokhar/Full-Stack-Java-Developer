@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import RenderTrackerDemo from "./components/RenderTrackerDemo";
-import ChildDemo from "./components/ChildDemo";
-import UserSortingDemo from "./components/UserSortingDemo";
+import RenderTrackerDemo from "./components/memoization/RenderTrackerDemo";
+import ChildDemo from "./components/memoization/ChildDemo";
+import UserSortingDemo from "./components/memoization/UserSortingDemo";
 
 function App() {
   return (
