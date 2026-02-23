@@ -5,6 +5,7 @@ import com.example.SpringSecurity.dto.PatientResponseDto;
 import com.example.SpringSecurity.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ public class AdminController {
 
     private final PatientService patientService;
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/patients")
     public ResponseEntity<List<PatientResponseDto>> getAllPatients(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
