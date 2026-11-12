@@ -17,5 +17,10 @@ public class ConditionalStatements {
         else{
             System.out.println("Please be mature!");
         }
+
+        String str = "Zulfiqar";
+        System.out.println(str.substring(2,4));
     }
+
+
 }
