@@ -6,18 +6,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentService {
 
-    // in spring boot this called circular dependency
+    private PaymentProperties paymentProperties;
 
     @Autowired
-    OrderService orderService;
+    PaymentService(PaymentProperties paymentProperties){
+        this.paymentProperties = paymentProperties;
+    }
 
-//    @Autowired
-//    PaymentService(OrderService orderService){
-//        this.orderService = orderService;
-//    }
+    public String getPaymentType(){
+        return paymentProperties.getType();
+    }
 
-    public void pay(){
-        System.out.println("Payment Done");
-        orderService.getDetails();
+    public int getPaymentRetryCount(){
+        return paymentProperties.getRetryCount();
+    }
+
+    public int getPaymentTimeout(){
+        return paymentProperties.getTimeout();
+    }
+
+    public void print(){
+        System.out.println(paymentProperties.getType());
+        System.out.println(paymentProperties.getRetryCount());
+        System.out.println(paymentProperties.getTimeout());
+    }
+
+    public PaymentDTO sendResponse(){
+        return new PaymentDTO(paymentProperties.getType(),paymentProperties.getRetryCount(),paymentProperties.getTimeout());
     }
 }
