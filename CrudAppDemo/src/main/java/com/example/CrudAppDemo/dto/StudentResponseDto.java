@@ -1,8 +1,11 @@
 package com.example.CrudAppDemo.dto;
 
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 
 public class StudentResponseDto {
+
     private Long id;
     private String name;
     private String email;

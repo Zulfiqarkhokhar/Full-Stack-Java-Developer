@@ -1,10 +1,20 @@
 package com.example.CrudAppDemo.dto;
 
+import jakarta.validation.constraints.*;
+
 public class StudentRequestDto {
+    @NotBlank(message = "Name cannot be null")
+    @Size(min = 2, max = 20, message = "Name must be between 2 to 20 character long")
     private String name;
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email must be valid")
     private String email;
+    @NotNull(message = "Age is required")
+    @Min(value = 18, message = "Age must be atleast 18")
     private int age;
+    @NotNull(message = "RollNo is required")
     private int rollNo;
+    @NotBlank(message = "Subject cannot be null")
     private String subject;
 
     public String getName() {

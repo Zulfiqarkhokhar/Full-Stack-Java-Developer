@@ -31,45 +31,30 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<StudentResponseDto> getStudent(@PathVariable Long id){
         StudentResponseDto studentResponseDto = studentService.getStudent(id);
-        if(studentResponseDto == null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.status(HttpStatus.OK).body(studentResponseDto);
     }
 
     @GetMapping
     public ResponseEntity<List<StudentResponseDto>> getAllStudents(){
         List<StudentResponseDto> studentResponseDtos = studentService.getAllStudents();
-        if(studentResponseDtos.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
         return ResponseEntity.status(HttpStatus.OK).body(studentResponseDtos);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<StudentResponseDto> updateStudent(@PathVariable Long id,@RequestBody StudentRequestDto studentRequestDto){
         StudentResponseDto updatedStudent = studentService.updateStudent(id,studentRequestDto);
-        if(updatedStudent == null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.status(HttpStatus.OK).body(updatedStudent);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
-        Boolean deleted = studentService.deleteStudent(id);
-        if(!deleted){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
-        }
-        return ResponseEntity.ok("Record Deleted");
+        studentService.deleteStudent(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     //soft delete
     @PatchMapping("/{id}")
     public ResponseEntity<String> softDelete(@PathVariable Long id){
-        Boolean deleted = studentService.deleteStudentSoftly(id);
-        if(!deleted){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
-        }
-        return ResponseEntity.ok("Record Deleted");
+        studentService.deleteStudentSoftly(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
