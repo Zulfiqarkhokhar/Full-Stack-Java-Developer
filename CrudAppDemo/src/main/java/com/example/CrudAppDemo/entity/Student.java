@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Student {
@@ -12,12 +15,22 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Name cannot be null")
+    @Size(min = 2, max = 20, message = "Name must be between 2 to 20 character long")
     private String name;
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email must be valid")
     private String email;
+    @NotNull(message = "Age is required")
+    @Min(value = 18, message = "Age must be atleast 18")
     private int age;
+    @NotNull(message = "RollNo is required")
     private int rollNo;
+    @NotBlank(message = "Subject cannot be null")
     private String subject;
     private Boolean deleted;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Boolean getDeleted() {
         return deleted;
@@ -73,5 +86,21 @@ public class Student {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

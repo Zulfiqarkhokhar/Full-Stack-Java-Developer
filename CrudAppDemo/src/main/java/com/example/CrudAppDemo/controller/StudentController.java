@@ -1,7 +1,10 @@
 package com.example.CrudAppDemo.controller;
 
+import com.example.CrudAppDemo.dto.StudentRequestDto;
+import com.example.CrudAppDemo.dto.StudentResponseDto;
 import com.example.CrudAppDemo.entity.Student;
 import com.example.CrudAppDemo.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,32 +23,32 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student student){
-        Student studentRes = studentService.createStudent(student);
+    public ResponseEntity<StudentResponseDto> createStudent(@Valid @RequestBody StudentRequestDto studentRequestDto){
+        StudentResponseDto studentRes = studentService.createStudent(studentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(studentRes);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id){
-        Student student = studentService.getStudent(id);
-        if(student == null){
+    public ResponseEntity<StudentResponseDto> getStudent(@PathVariable Long id){
+        StudentResponseDto studentResponseDto = studentService.getStudent(id);
+        if(studentResponseDto == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(student);
+        return ResponseEntity.status(HttpStatus.OK).body(studentResponseDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<Student>> getAllStudents(){
-        List<Student> students = studentService.getAllStudents();
-        if(students.isEmpty()){
+    public ResponseEntity<List<StudentResponseDto>> getAllStudents(){
+        List<StudentResponseDto> studentResponseDtos = studentService.getAllStudents();
+        if(studentResponseDtos.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(students);
+        return ResponseEntity.status(HttpStatus.OK).body(studentResponseDtos);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id,@RequestBody Student student){
-        Student updatedStudent = studentService.updateStudent(id,student);
+    public ResponseEntity<StudentResponseDto> updateStudent(@PathVariable Long id,@RequestBody StudentRequestDto studentRequestDto){
+        StudentResponseDto updatedStudent = studentService.updateStudent(id,studentRequestDto);
         if(updatedStudent == null){
             return ResponseEntity.notFound().build();
         }
