@@ -20,12 +20,13 @@ public class StudentService {
     }
 
     public Student createStudent(Student student) {
+        student.setDeleted(false);
        Student studentRes =  studentRepository.save(student);
        return studentRes;
     }
 
     public Student getStudent(Long id) {
-        Optional<Student> student = studentRepository.findById(id);
+        Optional<Student> student = studentRepository.findByIdAndDeletedIsFalse(id);
         if(student.isPresent()){
             return student.get();
         }
@@ -34,12 +35,12 @@ public class StudentService {
 
     public List<Student> getAllStudents() {
 
-        List<Student> students = studentRepository.findAll();
+        List<Student> students = studentRepository.findByDeletedIsFalse();
         return students;
     }
 
     public Student updateStudent(Long id, Student student) {
-        Optional<Student> existingStudent = studentRepository.findById(id);
+        Optional<Student> existingStudent = studentRepository.findByIdAndDeletedIsFalse(id);
         if(existingStudent.isEmpty()){
             return null;
         }
@@ -49,6 +50,7 @@ public class StudentService {
         studentToUpdate.setAge(student.getAge());
         studentToUpdate.setRollNo(student.getRollNo());
         studentToUpdate.setSubject(student.getSubject());
+        studentToUpdate.setDeleted(false);
 
         return studentRepository.save(studentToUpdate);
     }
@@ -62,5 +64,16 @@ public class StudentService {
         studentRepository.deleteById(id);
         return true;
 
+    }
+
+    public Boolean deleteStudentSoftly(Long id) {
+        Optional<Student> existingStudent = studentRepository.findByIdAndDeletedIsFalse(id);
+        if(existingStudent.isEmpty()){
+            return false;
+        }
+        Student studentToSave = existingStudent.get();
+        studentToSave.setDeleted(true);
+        studentRepository.save(studentToSave);
+        return true;
     }
 }

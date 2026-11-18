@@ -35,12 +35,12 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getAllStudents(){
+    public ResponseEntity<List<Student>> getAllStudents(){
         List<Student> students = studentService.getAllStudents();
         if(students.isEmpty()){
-            return (List<Student>) ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(students).getBody();
+        return ResponseEntity.status(HttpStatus.OK).body(students);
     }
 
     @PutMapping("/{id}")
@@ -54,6 +54,16 @@ public class StudentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
         Boolean deleted = studentService.deleteStudent(id);
+        if(!deleted){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
+        }
+        return ResponseEntity.ok("Record Deleted");
+    }
+
+    //soft delete
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> softDelete(@PathVariable Long id){
+        Boolean deleted = studentService.deleteStudentSoftly(id);
         if(!deleted){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
         }
