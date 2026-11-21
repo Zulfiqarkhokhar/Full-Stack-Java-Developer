@@ -20,4 +20,10 @@ public class StudentController {
         Student s = studentService.createStudent(student);
         return ResponseEntity.ok(s);
     }
+
+    @GetMapping
+    public ResponseEntity<String> getStudents(){
+        String s = "All Student Data";
+        return ResponseEntity.ok(studentService.getStudents(s));
+    }
 }
